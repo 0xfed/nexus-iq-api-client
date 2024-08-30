@@ -94,7 +94,8 @@ if 'components' in json_spec and 'schemas' in json_spec['components'] \
         'type': 'string',
         'enum': [
             'baseUrl',
-            'forceBaseUrl'
+            'forceBaseUrl',
+            'ADVANCED_REPORTING_INSIGHTS_ENABLED',
         ]
     }
 
@@ -108,7 +109,11 @@ if 'components' in json_spec and 'schemas' in json_spec['components'] \
             'forceBaseUrl': {
                 'nullable': True,
                 'type': 'boolean'
-            }
+            },
+            'ADVANCED_REPORTING_INSIGHTS_ENABLED' : {
+                'nullable': True,
+                'type': 'boolean'
+            },
         }
     }
 

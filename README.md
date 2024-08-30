@@ -70,9 +70,7 @@ Get it from your Sonatype IQ Server at `/api/v2/endpoints/public`.
 ## Generation of API Clients
 
 ```
-docker run --rm -v "$(PWD):/local" openapitools/openapi-generator-cli batch --clean /local/typescript.yaml
-
-docker run --rm -v "$(PWD):/local" openapitools/openapi-generator-cli generate -i /local/spec/openapi.yaml -g typescript-fetch -o /local/out/test -c /local/openapi-config.yaml -v > out.log
+docker run --rm -v "${PWD}:/local" openapitools/openapi-generator-cli batch --clean /local/go.yaml
 ```
 
 ## Diagnosing Responses that are not Schema Compliant

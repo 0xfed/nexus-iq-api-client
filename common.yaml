@@ -1,5 +1,5 @@
 inputSpec: /local/spec/openapi.yaml
-gitUserId: sonatype-nexus-community
+gitUserId: 0xfed
 gitRepoId: nexus-iq-api-client
 
 # verbose: true
