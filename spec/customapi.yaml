@@ -1,0 +1,89 @@
+paths:
+  /rest/legacyViolations/organization/{organizationId}:
+    put:
+      tags: 
+      - Legacy Violations
+      summary: Update legacy violations for an organization
+      parameters:
+        - in: path
+          name: organizationId
+          required: true
+          schema:
+            type: string
+          description: The ID of cthe organization
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                allowOverride:
+                  type: boolean
+                enabled:
+                  type: boolean
+              required:
+                - allowOverride
+                - enabled
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LegacyViolationsResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+    get:
+      tags: 
+      - Legacy Violations
+      summary: Get legacy violations for an organization
+      parameters:
+        - in: path
+          name: organizationId
+          required: true
+          schema:
+            type: string
+          description: The ID of the organization
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LegacyViolationsResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+components:
+  schemas:
+    LegacyViolationsResponse:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        enabledInParent:
+          type: boolean
+          nullable: true
+        inheritedFromOrganizationName:
+          type: string
+          nullable: true
+        allowOverride:
+          type: boolean
+        allowChange:
+          type: boolean
+
+tags:
+- description: Legacy violations for an organization
+  name: Legacy Violations

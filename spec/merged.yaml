@@ -2795,6 +2795,21 @@ components:
           - global
           type: string
       type: object
+    LegacyViolationsResponse:
+      properties:
+        allowChange:
+          type: boolean
+        allowOverride:
+          type: boolean
+        enabled:
+          type: boolean
+        enabledInParent:
+          nullable: true
+          type: boolean
+        inheritedFromOrganizationName:
+          nullable: true
+          type: string
+      type: object
     LegalSourceLinkDTO:
       properties:
         content:
@@ -8786,6 +8801,73 @@ paths:
           description: default response
       tags:
       - Vulnerabilities
+  /rest/legacyViolations/organization/{organizationId}:
+    get:
+      parameters:
+      - description: The ID of the organization
+        in: path
+        name: organizationId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LegacyViolationsResponse'
+          description: Successful response
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+      summary: Get legacy violations for an organization
+      tags:
+      - Legacy Violations
+    put:
+      parameters:
+      - description: The ID of cthe organization
+        in: path
+        name: organizationId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                allowOverride:
+                  type: boolean
+                enabled:
+                  type: boolean
+              required:
+              - allowOverride
+              - enabled
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LegacyViolationsResponse'
+          description: Successful response
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+      summary: Update legacy violations for an organization
+      tags:
+      - Legacy Violations
 security:
 - BasicAuth: []
 tags:
@@ -8862,3 +8944,5 @@ tags:
 - name: Users
 - name: Vulnerabilities
 - name: sbom
+- description: Legacy violations for an organization
+  name: Legacy Violations

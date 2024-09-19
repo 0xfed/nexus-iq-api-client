@@ -1,4 +1,4 @@
-inputSpec: /local/spec/openapi.yaml
+inputSpec: /local/spec/merged.yaml
 gitUserId: "0xfed"
 gitRepoId: nexus-iq-api-client
 
