@@ -2795,20 +2795,24 @@ components:
           - global
           type: string
       type: object
-    LegacyViolationsResponse:
+    LegacyViolationsDTO:
+      additionalProperties: true
       properties:
-        allowChange:
-          type: boolean
+        allowOverride:
+          type: string
+        enabled:
+          type: string
+      required:
+      - allowOverride
+      - enabled
+      type: object
+    LegacyViolationsDTOResponse:
+      additionalProperties: true
+      properties:
         allowOverride:
           type: boolean
         enabled:
           type: boolean
-        enabledInParent:
-          nullable: true
-          type: boolean
-        inheritedFromOrganizationName:
-          nullable: true
-          type: string
       type: object
     LegalSourceLinkDTO:
       properties:
@@ -8801,7 +8805,7 @@ paths:
           description: default response
       tags:
       - Vulnerabilities
-  /rest/legacyViolations/organization/{organizationId}:
+  /rest/legacyViolations/{owner_type}/{organizationId}:
     get:
       parameters:
       - description: The ID of the organization
@@ -8810,12 +8814,18 @@ paths:
         required: true
         schema:
           type: string
+      - description: The type of the entity
+        in: path
+        name: owner_type
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LegacyViolationsResponse'
+                $ref: '#/components/schemas/LegacyViolationsDTOResponse'
           description: Successful response
         '400':
           description: Bad request
@@ -8830,9 +8840,15 @@ paths:
       - Legacy Violations
     put:
       parameters:
-      - description: The ID of cthe organization
+      - description: The ID of the entity
         in: path
         name: organizationId
+        required: true
+        schema:
+          type: string
+      - description: The type of the entity
+        in: path
+        name: owner_type
         required: true
         schema:
           type: string
@@ -8840,22 +8856,14 @@ paths:
         content:
           application/json:
             schema:
-              properties:
-                allowOverride:
-                  type: boolean
-                enabled:
-                  type: boolean
-              required:
-              - allowOverride
-              - enabled
-              type: object
+              $ref: '#/components/schemas/LegacyViolationsDTO'
         required: true
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LegacyViolationsResponse'
+                $ref: '#/components/schemas/LegacyViolationsDTOResponse'
           description: Successful response
         '400':
           description: Bad request

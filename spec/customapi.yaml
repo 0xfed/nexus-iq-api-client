@@ -1,5 +1,5 @@
 paths:
-  /rest/legacyViolations/organization/{organizationId}:
+  /rest/legacyViolations/{owner_type}/{organizationId}:
     put:
       tags: 
       - Legacy Violations
@@ -10,28 +10,27 @@ paths:
           required: true
           schema:
             type: string
-          description: The ID of cthe organization
+          description: The ID of the entity
+        - in: path
+          name: owner_type
+          required: true
+          schema:
+            type: string
+          description: The type of the entity
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                allowOverride:
-                  type: boolean
-                enabled:
-                  type: boolean
-              required:
-                - allowOverride
-                - enabled
+              $ref: '#/components/schemas/LegacyViolationsDTO'
+              
       responses:
         '200':
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LegacyViolationsResponse'
+                $ref: '#/components/schemas/LegacyViolationsDTOResponse'
         '400':
           description: Bad request
         '401':
@@ -51,13 +50,19 @@ paths:
           schema:
             type: string
           description: The ID of the organization
+        - in: path
+          name: owner_type
+          required: true
+          schema:
+            type: string
+          description: The type of the entity
       responses:
         '200':
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LegacyViolationsResponse'
+                $ref: '#/components/schemas/LegacyViolationsDTOResponse'
         '400':
           description: Bad request
         '401':
@@ -68,22 +73,26 @@ paths:
           description: Not found
 components:
   schemas:
-    LegacyViolationsResponse:
+    LegacyViolationsDTO:
+      additionalProperties: true
+      type: object
+      properties:
+        enabled:
+          type: string
+        allowOverride:
+          type: string
+      required:
+        - allowOverride
+        - enabled
+    LegacyViolationsDTOResponse:
+      additionalProperties: true
       type: object
       properties:
         enabled:
           type: boolean
-        enabledInParent:
-          type: boolean
-          nullable: true
-        inheritedFromOrganizationName:
-          type: string
           nullable: true
         allowOverride:
           type: boolean
-        allowChange:
-          type: boolean
-
 tags:
 - description: Legacy violations for an organization
   name: Legacy Violations
